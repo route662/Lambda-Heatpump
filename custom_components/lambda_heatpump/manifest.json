@@ -1,6 +1,6 @@
 {
   "domain": "lambda_heatpump",
-  "name": "Lambda Heatpump Integration",
+  "name": "Lambda Heatpump",
   "version": "1.0.0",
   "config_flow": true,
   "requirements": ["pymodbus==2.5.3"],
