@@ -5,9 +5,5 @@
   "config_flow": true,
   "requirements": ["pymodbus==2.5.3"],
   "codeowners": ["@route662"],
-  "iot_class": "local_polling",
-  "translations": {
-    "de": "translations/de.json",
-    "en": "translations/en.json"
-  }
+  "iot_class": "local_polling"
 }
