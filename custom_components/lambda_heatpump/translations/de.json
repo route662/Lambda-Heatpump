@@ -1,0 +1,17 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "ip_address": "IP-Adresse",
+          "update_interval": "Abfrageintervall (Sekunden)"
+        },
+        "title": "Lambda Heatpump Konfiguration",
+        "description": "Bitte geben Sie die IP-Adresse der Wärmepumpe und das Abfrageintervall ein."
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zur Wärmepumpe konnte nicht hergestellt werden."
+    }
+  }
+}
