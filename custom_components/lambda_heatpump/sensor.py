@@ -10,7 +10,7 @@ _LOGGER = logging.getLogger(__name__)
 # Liste aller auslesbaren Register
 SENSORS = [
     # General Ambient
-    {"name": "Ambient Error Number", "register": 0, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total", "label": "General Ambient"},
+    {"name": "Ambient Error Number", "register": 0, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "Ambient Operating State", "register": 1, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
      "description_map": ["Off", "Automatik", "Manual", "Error"]},
     {"name": "Ambient Temperature", "register": 2, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
@@ -181,7 +181,6 @@ class LambdaHeatpumpSensor(Entity):
         self._device_class = sensor.get("device_class")
         self._state_class = sensor.get("state_class")
         self._description_map = sensor.get("description_map")
-        self._label = sensor.get("label")  # Das Label wird hier gespeichert
 
     @property
     def name(self):
@@ -230,13 +229,6 @@ class LambdaHeatpumpSensor(Entity):
         """Return if entity is available."""
         return self._coordinator.last_update_success
 
-    @property
-    def extra_state_attributes(self):
-        """Return additional attributes of the sensor."""
-        return {
-            "label": self._label,  # Das Label wird hier als Attribut hinzugefügt
-            "register": self._register,  # Optional: Register hinzufügen
-        }
 
     async def async_update(self):
         """Update the entity."""
