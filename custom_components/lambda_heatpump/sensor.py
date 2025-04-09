@@ -48,7 +48,8 @@ SENSORS = [
     {"name": "Heat Pump 1 Volume Flow Energy Source", "register": 1009, "unit": "l/min", "scale": 0.01, "precision": 1, "data_type": "int16", "state_class": "total"},
     {"name": "Heat Pump 1 Compressor Unit Rating", "register": 1010, "unit": "%", "scale": 0.01, "precision": 0, "data_type": "uint16", "state_class": "total"},
     {"name": "Heat Pump 1 Actual Heating Capacity", "register": 1011, "unit": "kW", "scale": 0.1, "precision": 1, "data_type": "int16", "state_class": "total"},
-    {"name": "Heat Pump 1 Inverter Power Consumption", "register": 1012, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
+    {"name": "Heat Pump 1 Inverter Power Consumption", "register": 1012, "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int16",
+     "device_class": "energy", "state_class": "total_increasing"},
     {"name": "Heat Pump 1 COP", "register": 1013, "unit": "", "scale": 0.01, "precision": 2, "data_type": "int16", "state_class": "total"},
     {"name": "Heat Pump 1 Request Type", "register": 1015, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total",
      "description_map": ["No Request", "Flow Pump Circulation", "Central Heating", "Central Cooling", "Domestic Hot Water"]},
@@ -276,8 +277,8 @@ class LambdaHeatpumpSensor(Entity):
             "identifiers": {(DOMAIN, self._device_name)},
             "name": self._device_name,
             "manufacturer": "Lambda",
-            "model": "Heatpump Model X",
-            "sw_version": "1.1.7",
+            "model": "Heatpump Eureka-Luft (EU-L)",
+            "sw_version": "1.2.3",
         }
 
     async def async_update(self):
