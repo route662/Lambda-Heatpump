@@ -277,32 +277,8 @@ class LambdaHeatpumpSensor(Entity):
             "name": self._device_name,
             "manufacturer": "Lambda",
             "model": "Heatpump Eureka-Luft (EU-L)",
-            "sw_version": "1.2.3",
-            "default_icon": self._get_device_icon(),  # Dynamisches Icon basierend auf dem Gerät
+            "sw_version": "1.2.3",            
         }
-
-    def _get_device_icon(self):
-        """Return an appropriate icon for the device."""
-        if "Ambient" in self._device_name:
-            return "mdi:weather-sunny"  # Beispiel-Icon für Ambient
-        elif "E-Manager" in self._device_name:
-            return "mdi:home-lightning-bolt"  # Beispiel-Icon für E-Manager
-        elif "Heat Pump" in self._device_name:
-            return "mdi:heat-pump"  # Beispiel-Icon für Heat Pump
-        elif "Boiler" in self._device_name:
-            return "mdi:water-boiler"  # Beispiel-Icon für Boiler
-        elif "Buffer" in self._device_name:
-            return "mdi:water"  # Beispiel-Icon für Buffer
-        elif "Solar" in self._device_name:
-            return "mdi:solar-power"  # Beispiel-Icon für Solar
-        elif "Heating Circuit 1" in self._device_name:
-            return "mdi:radiator"  # Beispiel-Icon für Heating Circuit 1
-        elif "Heating Circuit 2" in self._device_name:
-            return "mdi:radiator"  # Beispiel-Icon für Heating Circuit 2
-        elif "Heating Circuit 3" in self._device_name:
-            return "mdi:radiator"  # Beispiel-Icon für Heating Circuit 3
-        return "mdi:thermometer"  # Standard-Icon
-
     async def async_update(self):
         """Update the entity."""
         await self._coordinator.async_request_refresh()
