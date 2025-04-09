@@ -4,6 +4,7 @@ import logging
 from pymodbus.client.sync import ModbusTcpClient
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from . import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -34,7 +35,7 @@ SENSORS = [
                          "Not Used", "Cooling", "Defrosting", "Not Used", "Not Used", "Not Used", "Not Used", "Not Used", "Not Used",
                          "Not Used", "Not Used", "Not Used", "Stopping", "Not Used", "Not Used", "Not Used", "Not Used", "Not Used",
                          "Not Used", "Not Used", "Not Used", "Not Used", "Not Used", "Fault-Lock", "Alarm-Block", "Not Used", "Not Used",
-                         "Not Used", "Not Used", "Not Used", "Not Used", "Not Used", "Error-Reset"]},
+                         "Not Used", "Not Used", "Not Used", "Not Used", "Error-Reset"]},
     {"name": "Heat Pump 1 Operating State", "register": 1003, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
      "description_map": ["Standby", "Central Heating", "Domestic Hot Water", "Cold Climate", "Circulate", "Defrost", "Off", "Frost",
                          "Standby-Frost", "Not used", "Summer", "Holiday", "Error", "Warning", "Info-Message", "Time-Block", "Release-Block",
