@@ -57,9 +57,9 @@ SENSORS = [
     {"name": "Heat Pump 1 Requested Flow to Return Line Temperature Difference", "register": 1018, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heat Pump 1 Relais State 2nd Heating Stage", "register": 1019, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
 #    {"name": "Heat Pump 1 Compressor Power Consumption Accumulated", "register": 1020, "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int32", "state_class": "total"},
-    {"name": "Heat Pump 1 Compressor Power Consumption Accumulated", "register": 1020, "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int32", "device_class": "energy", "state_class": "total_increasing"},
+    {"name": "Heat Pump 1 Compressor Power Consumption Accumulated", "register": [1020, 1021], "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int32", "device_class": "energy", "state_class": "total_increasing"},
 #    {"name": "Heat Pump 1 Compressor Thermal Energy Output Accumulated", "register": 1022, "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int32", "state_class": "total"},
-    {"name": "Heat Pump 1 Compressor Thermal Energy Output Accumulated", "register": 1022, "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int32", "device_class": "energy", "state_class": "total_increasing"},
+    {"name": "Heat Pump 1 Compressor Thermal Energy Output Accumulated", "register": [1022, 1023], "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int32", "device_class": "energy", "state_class": "total_increasing"},
 
     # Boiler
     {"name": "Boiler Error Number", "register": 2000, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
@@ -146,12 +146,19 @@ class ModbusClientManager:
         """Fetch data from the Lambda Heatpump."""
         data = {}
         for sensor in sensors:
-            result = self.client.read_holding_registers(sensor["register"], 1, unit=1)
+            count = 2 if sensor.get("data_type") == "int32" else 1
+            result = self.client.read_holding_registers(sensor["register"], count, unit=1)
             if result.isError():
                 _LOGGER.error(f"Error reading register {sensor['register']}")
                 data[sensor["name"]] = None
             else:
-                data[sensor["name"]] = result.registers[0]
+                if sensor.get("data_type") == "int32":
+                    # int32 = 2 Register = high/low → zusammensetzen
+                    high, low = result.registers
+                    value = (high << 16) + low if high < 0x8000 else ((high << 16) + low - 0x100000000)
+                    data[sensor["name"]] = value
+                else:
+                    data[sensor["name"]] = result.registers[0]
         return data
 
     def close(self):
@@ -279,7 +286,7 @@ class LambdaHeatpumpSensor(Entity):
             "name": self._device_name,
             "manufacturer": "Lambda",
             "model": "Heatpump Eureka-Luft (EU-L)",
-            "sw_version": "1.2.8",            
+            "sw_version": "1.2.9",            
         }
     async def async_update(self):
         """Update the entity."""
