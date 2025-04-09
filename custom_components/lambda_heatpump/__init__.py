@@ -13,7 +13,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up Lambda Heatpump from a config entry."""
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN][entry.entry_id] = entry.data
-    hass.config_entries.async_setup_platforms(entry, ["sensor"])
+
+    # Korrekte Methode verwenden, um Plattformen zu registrieren
+    await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
     return True
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
