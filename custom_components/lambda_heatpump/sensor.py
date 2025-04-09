@@ -146,19 +146,50 @@ class ModbusClientManager:
         """Fetch data from the Lambda Heatpump."""
         data = {}
         for sensor in sensors:
-            count = 2 if sensor.get("data_type") == "int32" else 1
-            result = self.client.read_holding_registers(sensor["register"], count, unit=1)
-            if result.isError():
-                _LOGGER.error(f"Error reading register {sensor['register']}")
-                data[sensor["name"]] = None
-            else:
+            try:
+                # Prüfen, ob es sich um int32 handelt (2 Register)
                 if sensor.get("data_type") == "int32":
-                    # int32 = 2 Register = high/low → zusammensetzen
-                    high, low = result.registers
+                    if not isinstance(sensor["register"], list) or len(sensor["register"]) != 2:
+                        _LOGGER.error(f"Invalid register configuration for int32 sensor: {sensor['name']}")
+                        data[sensor["name"]] = None
+                        continue
+
+                    # Zwei Register lesen (High und Low)
+                    high_result = self.client.read_holding_registers(sensor["register"][0], 1, unit=1)
+                    low_result = self.client.read_holding_registers(sensor["register"][1], 1, unit=1)
+
+                    if high_result.isError() or low_result.isError():
+                        _LOGGER.error(f"Error reading int32 registers for sensor: {sensor['name']}")
+                        data[sensor["name"]] = None
+                        continue
+
+                    high = high_result.registers[0]
+                    low = low_result.registers[0]
+
+                    # Zusammensetzen des int32-Werts
                     value = (high << 16) + low if high < 0x8000 else ((high << 16) + low - 0x100000000)
-                    data[sensor["name"]] = value
+
+                    # Skalierung und Präzision anwenden
+                    scaled_value = value * sensor.get("scale", 1)
+                    data[sensor["name"]] = round(scaled_value, sensor.get("precision", 0))
+
                 else:
-                    data[sensor["name"]] = result.registers[0]
+                    # Einzelnes Register lesen
+                    count = 1
+                    result = self.client.read_holding_registers(sensor["register"], count, unit=1)
+                    if result.isError():
+                        _LOGGER.error(f"Error reading register {sensor['register']} for sensor: {sensor['name']}")
+                        data[sensor["name"]] = None
+                    else:
+                        # Skalierung und Präzision anwenden
+                        raw_value = result.registers[0]
+                        scaled_value = raw_value * sensor.get("scale", 1)
+                        data[sensor["name"]] = round(scaled_value, sensor.get("precision", 0))
+
+            except Exception as e:
+                _LOGGER.error(f"Failed to fetch data for sensor {sensor['name']}: {e}")
+                data[sensor["name"]] = None
+
         return data
 
     def close(self):
@@ -286,7 +317,7 @@ class LambdaHeatpumpSensor(Entity):
             "name": self._device_name,
             "manufacturer": "Lambda",
             "model": "Heatpump Eureka-Luft (EU-L)",
-            "sw_version": "1.2.9",            
+            "sw_version": "1.2.10",            
         }
     async def async_update(self):
         """Update the entity."""
