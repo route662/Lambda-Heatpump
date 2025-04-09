@@ -155,16 +155,13 @@ class ModbusClientManager:
                         continue
 
                     # Zwei Register lesen (High und Low)
-                    high_result = self.client.read_holding_registers(sensor["register"][0], 1, unit=1)
-                    low_result = self.client.read_holding_registers(sensor["register"][1], 1, unit=1)
-
-                    if high_result.isError() or low_result.isError():
+                    result = self.client.read_holding_registers(sensor["register"][0], 2, unit=1)
+                    if result.isError():
                         _LOGGER.error(f"Error reading int32 registers for sensor: {sensor['name']}")
                         data[sensor["name"]] = None
                         continue
 
-                    high = high_result.registers[0]
-                    low = low_result.registers[0]
+                    high, low = result.registers
 
                     # Zusammensetzen des int32-Werts
                     value = (high << 16) + low if high < 0x8000 else ((high << 16) + low - 0x100000000)
