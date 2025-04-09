@@ -181,6 +181,7 @@ class LambdaHeatpumpSensor(Entity):
         self._device_class = sensor.get("device_class")
         self._state_class = sensor.get("state_class")
         self._description_map = sensor.get("description_map")
+        self._label = sensor.get("label")  # Das Label wird hier gespeichert
 
     @property
     def name(self):
@@ -228,6 +229,14 @@ class LambdaHeatpumpSensor(Entity):
     def available(self):
         """Return if entity is available."""
         return self._coordinator.last_update_success
+
+    @property
+    def extra_state_attributes(self):
+        """Return additional attributes of the sensor."""
+        return {
+            "label": self._label,  # Das Label wird hier als Attribut hinzugefügt
+            "register": self._register,  # Optional: Register hinzufügen
+        }
 
     async def async_update(self):
         """Update the entity."""
