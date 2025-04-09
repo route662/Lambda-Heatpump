@@ -48,8 +48,7 @@ SENSORS = [
     {"name": "Heat Pump 1 Volume Flow Energy Source", "register": 1009, "unit": "l/min", "scale": 0.01, "precision": 1, "data_type": "int16", "state_class": "total"},
     {"name": "Heat Pump 1 Compressor Unit Rating", "register": 1010, "unit": "%", "scale": 0.01, "precision": 0, "data_type": "uint16", "state_class": "total"},
     {"name": "Heat Pump 1 Actual Heating Capacity", "register": 1011, "unit": "kW", "scale": 0.1, "precision": 1, "data_type": "int16", "state_class": "total"},
-    {"name": "Heat Pump 1 Inverter Power Consumption", "register": 1012, "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int16",
-     "device_class": "energy", "state_class": "total_increasing"},
+    {"name": "Heat Pump 1 Inverter Power Consumption", "register": 1012, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "Heat Pump 1 COP", "register": 1013, "unit": "", "scale": 0.01, "precision": 2, "data_type": "int16", "state_class": "total"},
     {"name": "Heat Pump 1 Request Type", "register": 1015, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total",
      "description_map": ["No Request", "Flow Pump Circulation", "Central Heating", "Central Cooling", "Domestic Hot Water"]},
@@ -279,7 +278,30 @@ class LambdaHeatpumpSensor(Entity):
             "manufacturer": "Lambda",
             "model": "Heatpump Eureka-Luft (EU-L)",
             "sw_version": "1.2.3",
+            "default_icon": self._get_device_icon(),  # Dynamisches Icon basierend auf dem Gerät
         }
+
+    def _get_device_icon(self):
+        """Return an appropriate icon for the device."""
+        if "Ambient" in self._device_name:
+            return "mdi:weather-sunny"  # Beispiel-Icon für Ambient
+        elif "E-Manager" in self._device_name:
+            return "mdi:home-lightning-bolt"  # Beispiel-Icon für E-Manager
+        elif "Heat Pump" in self._device_name:
+            return "mdi:heat-pump"  # Beispiel-Icon für Heat Pump
+        elif "Boiler" in self._device_name:
+            return "mdi:water-boiler"  # Beispiel-Icon für Boiler
+        elif "Buffer" in self._device_name:
+            return "mdi:water"  # Beispiel-Icon für Buffer
+        elif "Solar" in self._device_name:
+            return "mdi:solar-power"  # Beispiel-Icon für Solar
+        elif "Heating Circuit 1" in self._device_name:
+            return "mdi:radiator"  # Beispiel-Icon für Heating Circuit 1
+        elif "Heating Circuit 2" in self._device_name:
+            return "mdi:radiator"  # Beispiel-Icon für Heating Circuit 2
+        elif "Heating Circuit 3" in self._device_name:
+            return "mdi:radiator"  # Beispiel-Icon für Heating Circuit 3
+        return "mdi:thermometer"  # Standard-Icon
 
     async def async_update(self):
         """Update the entity."""
