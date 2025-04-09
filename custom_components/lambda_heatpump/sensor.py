@@ -138,6 +138,11 @@ class LambdaHeatpumpSensor(Entity):
         return self._name
 
     @property
+    def unique_id(self):
+        """Return a unique ID for the sensor."""
+        return f"lambda_heatpump_{self._register}"
+
+    @property
     def state(self):
         """Return the state of the sensor."""
         raw_value = self._coordinator.data.get(self._name)
