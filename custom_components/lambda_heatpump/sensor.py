@@ -198,8 +198,15 @@ class LambdaHeatpumpSensor(Entity):
         raw_value = self._coordinator.data.get(self._name)
         if raw_value is None:
             return None
-        # Anwenden von Skalierung und Präzision
+        # Anwenden von Skalierung
         scaled_value = raw_value * self._scale
+        # Verwenden der description_map, falls vorhanden
+        if self._description_map:
+            try:
+                return self._description_map[int(scaled_value)]
+            except IndexError:
+                return f"Unknown ({scaled_value})"
+        # Rückgabe des skalierten Werts, falls keine description_map vorhanden ist
         return round(scaled_value, self._precision)
 
     @property
