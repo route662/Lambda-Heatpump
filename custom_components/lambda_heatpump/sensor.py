@@ -56,7 +56,7 @@ SENSORS = [
     {"name": "Heat Pump 1 Requested Return Line Temperature", "register": 1017, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heat Pump 1 Requested Flow to Return Line Temperature Difference", "register": 1018, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heat Pump 1 Relais State 2nd Heating Stage", "register": 1019, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
-    {"name": "Heat Pump 1 Compressor Power Consumption Accumulated", "register": 1021, "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int32", "state_class": "total"},
+    {"name": "Heat Pump 1 Compressor Power Consumption Accumulated", "register": 1020, "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int32", "state_class": "total"},
     {"name": "Heat Pump 1 Compressor Thermal Energy Output Accumulated", "register": 1022, "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int32", "state_class": "total"},
 
     # Boiler
@@ -77,14 +77,14 @@ SENSORS = [
     {"name": "Buffer Set Temperature", "register": 3050, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
 
     # Solar
-    {"name": "Solar Error Number", "register": 4000, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
-    {"name": "Solar Operating State", "register": 4001, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
-     "description_map": ["Standby", "Heating", "Error", "Off"]},
-    {"name": "Solar Actual Collector Temperature", "register": 4002, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
-    {"name": "Solar Actual Buffer Sensor 1 Temperature", "register": 4003, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
-    {"name": "Solar Actual Buffer Sensor 2 Temperature", "register": 4004, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
-    {"name": "Solar Set Max Buffer Temperature", "register": 4050, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
-    {"name": "Solar Set Buffer Changeover Temperature", "register": 4051, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+#    {"name": "Solar Error Number", "register": 4000, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
+#    {"name": "Solar Operating State", "register": 4001, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
+#     "description_map": ["Standby", "Heating", "Error", "Off"]},
+#    {"name": "Solar Actual Collector Temperature", "register": 4002, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+#    {"name": "Solar Actual Buffer Sensor 1 Temperature", "register": 4003, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+#    {"name": "Solar Actual Buffer Sensor 2 Temperature", "register": 4004, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+#    {"name": "Solar Set Max Buffer Temperature", "register": 4050, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+#    {"name": "Solar Set Buffer Changeover Temperature", "register": 4051, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
 
     # Heating Circuit 1
     {"name": "Heating Circuit 1 Error Number", "register": 5000, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
