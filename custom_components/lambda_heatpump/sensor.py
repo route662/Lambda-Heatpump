@@ -9,11 +9,56 @@ _LOGGER = logging.getLogger(__name__)
 
 # Liste aller auslesbaren Register
 SENSORS = [
-    {"name": "Vorlauftemperatur", "register": 3000, "unit": "°C"},
-    {"name": "Rücklauftemperatur", "register": 3001, "unit": "°C"},
-    {"name": "Warmwassertemperatur", "register": 3002, "unit": "°C"},
-    {"name": "Außentemperatur", "register": 3003, "unit": "°C"},
-    {"name": "Betriebsmodus", "register": 3004, "unit": ""},
+    {
+        "name": "Vorlauftemperatur",
+        "register": 3000,
+        "unit": "°C",
+        "scale": 0.1,
+        "precision": 1,
+        "data_type": "int16",
+        "device_class": "temperature",
+        "state_class": "measurement"
+    },
+    {
+        "name": "Rücklauftemperatur",
+        "register": 3001,
+        "unit": "°C",
+        "scale": 0.1,
+        "precision": 1,
+        "data_type": "int16",
+        "device_class": "temperature",
+        "state_class": "measurement"
+    },
+    {
+        "name": "Warmwassertemperatur",
+        "register": 3002,
+        "unit": "°C",
+        "scale": 0.1,
+        "precision": 1,
+        "data_type": "int16",
+        "device_class": "temperature",
+        "state_class": "measurement"
+    },
+    {
+        "name": "Außentemperatur",
+        "register": 3003,
+        "unit": "°C",
+        "scale": 0.1,
+        "precision": 1,
+        "data_type": "int16",
+        "device_class": "temperature",
+        "state_class": "measurement"
+    },
+    {
+        "name": "Betriebsmodus",
+        "register": 3004,
+        "unit": "",
+        "scale": 1,
+        "precision": 0,
+        "data_type": "int16",
+        "device_class": None,
+        "state_class": None
+    },
     {"name": "Fehlercode", "register": 3005, "unit": ""},
     {"name": "Leistungsaufnahme", "register": 3006, "unit": "W"},
     {"name": "Gesamtenergieverbrauch", "register": 3007, "unit": "kWh"},
@@ -81,6 +126,11 @@ class LambdaHeatpumpSensor(Entity):
         self._name = sensor["name"]
         self._register = sensor["register"]
         self._unit = sensor["unit"]
+        self._scale = sensor.get("scale", 1)
+        self._precision = sensor.get("precision", 0)
+        self._data_type = sensor.get("data_type", "int16")
+        self._device_class = sensor.get("device_class")
+        self._state_class = sensor.get("state_class")
 
     @property
     def name(self):
@@ -90,12 +140,27 @@ class LambdaHeatpumpSensor(Entity):
     @property
     def state(self):
         """Return the state of the sensor."""
-        return self._coordinator.data.get(self._name)
+        raw_value = self._coordinator.data.get(self._name)
+        if raw_value is None:
+            return None
+        # Anwenden von Skalierung und Präzision
+        scaled_value = raw_value * self._scale
+        return round(scaled_value, self._precision)
 
     @property
     def unit_of_measurement(self):
         """Return the unit of measurement."""
         return self._unit
+
+    @property
+    def device_class(self):
+        """Return the device class of the sensor."""
+        return self._device_class
+
+    @property
+    def state_class(self):
+        """Return the state class of the sensor."""
+        return self._state_class
 
     @property
     def available(self):
