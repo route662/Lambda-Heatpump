@@ -34,7 +34,7 @@ SENSORS = [
                          "Not Used", "Cooling", "Defrosting", "Not Used", "Not Used", "Not Used", "Not Used", "Not Used", "Not Used",
                          "Not Used", "Not Used", "Not Used", "Stopping", "Not Used", "Not Used", "Not Used", "Not Used", "Not Used",
                          "Not Used", "Not Used", "Not Used", "Not Used", "Not Used", "Fault-Lock", "Alarm-Block", "Not Used", "Not Used",
-                         "Not Used", "Not Used", "Not Used", "Not Used", "Not Used", "Not Used", "Error-Reset"]},
+                         "Not Used", "Not Used", "Not Used", "Not Used", "Not Used", "Error-Reset"]},
     {"name": "Heat Pump 1 Operating State", "register": 1003, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
      "description_map": ["Standby", "Central Heating", "Domestic Hot Water", "Cold Climate", "Circulate", "Defrost", "Off", "Frost",
                          "Standby-Frost", "Not used", "Summer", "Holiday", "Error", "Warning", "Info-Message", "Time-Block", "Release-Block",
@@ -160,7 +160,27 @@ async def async_setup_entry(hass, entry, async_add_entities):
 
     await coordinator.async_config_entry_first_refresh()
 
-    sensors = [LambdaHeatpumpSensor(coordinator, sensor) for sensor in SENSORS]
+    # Gruppierung der Sensoren nach Kategorien
+    grouped_sensors = [
+        (sensor, "General Ambient") for sensor in SENSORS[:5]
+    ] + [
+        (sensor, "E-Manager") for sensor in SENSORS[5:10]
+    ] + [
+        (sensor, "Heat Pump No. 1") for sensor in SENSORS[10:30]
+    ] + [
+        (sensor, "Boiler") for sensor in SENSORS[30:35]
+    ] + [
+        (sensor, "Buffer") for sensor in SENSORS[35:40]
+    ] + [
+        (sensor, "Solar") for sensor in SENSORS[40:45]
+    ] + [
+        (sensor, "Heating Circuit 1") for sensor in SENSORS[45:55]
+    ] + [
+        (sensor, "Heating Circuit 2") for sensor in SENSORS[55:]
+    ]
+
+    # Sensoren erstellen und hinzufügen
+    sensors = [LambdaHeatpumpSensor(coordinator, sensor, device_name) for sensor, device_name in grouped_sensors]
     async_add_entities(sensors)
 
     # Schließe den Client beim Entladen der Integration
@@ -169,7 +189,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
 class LambdaHeatpumpSensor(Entity):
     """Representation of a Lambda Heatpump sensor."""
 
-    def __init__(self, coordinator, sensor):
+    def __init__(self, coordinator, sensor, device_name):
         """Initialize the sensor."""
         self._coordinator = coordinator
         self._name = sensor["name"]
@@ -181,6 +201,7 @@ class LambdaHeatpumpSensor(Entity):
         self._device_class = sensor.get("device_class")
         self._state_class = sensor.get("state_class")
         self._description_map = sensor.get("description_map")
+        self._device_name = device_name  # Gruppierungsname
 
     @property
     def name(self):
@@ -196,7 +217,7 @@ class LambdaHeatpumpSensor(Entity):
     def state(self):
         """Return the state of the sensor."""
         raw_value = self._coordinator.data.get(self._name)
-        if raw_value is None:
+        if (raw_value is None) or (raw_value == 0x8000):
             return None
         # Anwenden von Skalierung
         scaled_value = raw_value * self._scale
@@ -229,6 +250,16 @@ class LambdaHeatpumpSensor(Entity):
         """Return if entity is available."""
         return self._coordinator.last_update_success
 
+    @property
+    def device_info(self):
+        """Return device information for grouping sensors."""
+        return {
+            "identifiers": {(DOMAIN, self._device_name)},
+            "name": self._device_name,
+            "manufacturer": "Lambda",
+            "model": "Heatpump Model X",
+            "sw_version": "1.1.7",
+        }
 
     async def async_update(self):
         """Update the entity."""
