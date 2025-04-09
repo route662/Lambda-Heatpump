@@ -10,7 +10,7 @@ _LOGGER = logging.getLogger(__name__)
 # Liste aller auslesbaren Register
 SENSORS = [
     # General Ambient
-    {"name": "Ambient Error Number", "register": 0, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
+    {"name": "Ambient Error Number", "register": 0, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total", "label": "General Ambient"},
     {"name": "Ambient Operating State", "register": 1, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
      "description_map": ["Off", "Automatik", "Manual", "Error"]},
     {"name": "Ambient Temperature", "register": 2, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
