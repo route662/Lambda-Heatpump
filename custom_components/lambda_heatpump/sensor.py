@@ -9,64 +9,42 @@ _LOGGER = logging.getLogger(__name__)
 
 # Liste aller auslesbaren Register
 SENSORS = [
-    {
-        "name": "Vorlauftemperatur",
-        "register": 3000,
-        "unit": "°C",
-        "scale": 0.1,
-        "precision": 1,
-        "data_type": "int16",
-        "device_class": "temperature",
-        "state_class": "measurement"
-    },
-    {
-        "name": "Rücklauftemperatur",
-        "register": 3001,
-        "unit": "°C",
-        "scale": 0.1,
-        "precision": 1,
-        "data_type": "int16",
-        "device_class": "temperature",
-        "state_class": "measurement"
-    },
-    {
-        "name": "Warmwassertemperatur",
-        "register": 3002,
-        "unit": "°C",
-        "scale": 0.1,
-        "precision": 1,
-        "data_type": "int16",
-        "device_class": "temperature",
-        "state_class": "measurement"
-    },
-    {
-        "name": "Außentemperatur",
-        "register": 3003,
-        "unit": "°C",
-        "scale": 0.1,
-        "precision": 1,
-        "data_type": "int16",
-        "device_class": "temperature",
-        "state_class": "measurement"
-    },
-    {
-        "name": "Betriebsmodus",
-        "register": 3004,
-        "unit": "",
-        "scale": 1,
-        "precision": 0,
-        "data_type": "int16",
-        "device_class": None,
-        "state_class": None
-    },
-    {"name": "Fehlercode", "register": 3005, "unit": ""},
-    {"name": "Leistungsaufnahme", "register": 3006, "unit": "W"},
-    {"name": "Gesamtenergieverbrauch", "register": 3007, "unit": "kWh"},
-    {"name": "Kompressordrehzahl", "register": 3008, "unit": "%"},
-    {"name": "Pumpendrehzahl", "register": 3009, "unit": "%"},
-    {"name": "Systemdruck", "register": 3010, "unit": "bar"},
-    {"name": "Laufzeit des Kompressors", "register": 3011, "unit": "h"},
-    {"name": "Laufzeit der Pumpe", "register": 3012, "unit": "h"},
+    # General Ambient
+    {"name": "Ambient Error Number", "register": 0, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
+    {"name": "Ambient Operating State", "register": 1, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total"},
+    {"name": "Ambient Temperature", "register": 2, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+    {"name": "Ambient Temperature 1h", "register": 3, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+    {"name": "Ambient Temperature Calculated", "register": 4, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+
+    # General E-Manager
+    {"name": "E-Manager Error Number", "register": 100, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
+    {"name": "E-Manager Operating State", "register": 101, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total"},
+    {"name": "E-Manager Actual Power", "register": 102, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
+    {"name": "E-Manager Actual Power Consumption", "register": 103, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
+    {"name": "E-Manager Power Consumption Setpoint", "register": 104, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
+
+    # Heat Pump No. 1
+    {"name": "Heat Pump 1 Error State", "register": 1000, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total"},
+    {"name": "Heat Pump 1 Error Number", "register": 1001, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
+    {"name": "Heat Pump 1 State", "register": 1002, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total"},
+    {"name": "Heat Pump 1 Operating State", "register": 1003, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total"},
+    {"name": "Heat Pump 1 Flow Line Temperature", "register": 1004, "unit": "°C", "scale": 0.01, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+    {"name": "Heat Pump 1 Return Line Temperature", "register": 1005, "unit": "°C", "scale": 0.01, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+    {"name": "Heat Pump 1 Volume Flow Heat Sink", "register": 1006, "unit": "l/h", "scale": 1, "precision": 1, "data_type": "int16", "state_class": "total"},
+    {"name": "Heat Pump 1 Energy Source Inlet Temperature", "register": 1007, "unit": "°C", "scale": 0.01, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+    {"name": "Heat Pump 1 Energy Source Outlet Temperature", "register": 1008, "unit": "°C", "scale": 0.01, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+    {"name": "Heat Pump 1 Volume Flow Energy Source", "register": 1009, "unit": "l/min", "scale": 0.01, "precision": 1, "data_type": "int16", "state_class": "total"},
+    {"name": "Heat Pump 1 Compressor Unit Rating", "register": 1010, "unit": "%", "scale": 0.01, "precision": 0, "data_type": "uint16", "state_class": "total"},
+    {"name": "Heat Pump 1 Actual Heating Capacity", "register": 1011, "unit": "kW", "scale": 0.1, "precision": 1, "data_type": "int16", "state_class": "total"},
+    {"name": "Heat Pump 1 Inverter Power Consumption", "register": 1012, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
+    {"name": "Heat Pump 1 COP", "register": 1013, "unit": "", "scale": 0.01, "precision": 2, "data_type": "int16", "state_class": "total"},
+    {"name": "Heat Pump 1 Request Type", "register": 1015, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
+    {"name": "Heat Pump 1 Requested Flow Line Temperature", "register": 1016, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+    {"name": "Heat Pump 1 Requested Return Line Temperature", "register": 1017, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+    {"name": "Heat Pump 1 Requested Flow to Return Line Temperature Difference", "register": 1018, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+    {"name": "Heat Pump 1 Relais State 2nd Heating Stage", "register": 1019, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
+    {"name": "Heat Pump 1 Compressor Power Consumption Accumulated", "register": 1020, "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int32", "state_class": "total"},
+    {"name": "Heat Pump 1 Compressor Thermal Energy Output Accumulated", "register": 1022, "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int32", "state_class": "total"},
 ]
 
 class ModbusClientManager:
