@@ -279,7 +279,7 @@ class LambdaHeatpumpSensor(Entity):
             "name": self._device_name,
             "manufacturer": "Lambda",
             "model": "Heatpump Eureka-Luft (EU-L)",
-            "sw_version": "1.2.3",            
+            "sw_version": "1.2.8",            
         }
     async def async_update(self):
         """Update the entity."""
