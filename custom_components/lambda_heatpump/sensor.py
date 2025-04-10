@@ -56,8 +56,8 @@ SENSORS = [
     {"name": "Heat Pump 1 Requested Return Line Temperature", "register": 1017, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heat Pump 1 Requested Flow to Return Line Temperature Difference", "register": 1018, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heat Pump 1 Relais State 2nd Heating Stage", "register": 1019, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
-    {"name": "Heat Pump 1 Compressor Power Consumption Accumulated", "register": [1020, 1021], "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int32", "device_class": "energy", "state_class": "total_increasing"},
-    {"name": "Heat Pump 1 Compressor Thermal Energy Output Accumulated", "register": [1022, 1023], "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int32", "device_class": "energy", "state_class": "total_increasing"},
+    {"name": "Heat Pump 1 Compressor Power Consumption Accumulated", "register": [1020, 1021], "unit": "kWh", "scale": 0.001, "precision": 3, "data_type": "int32", "device_class": "energy", "state_class": "total_increasing"},
+    {"name": "Heat Pump 1 Compressor Thermal Energy Output Accumulated", "register": [1022, 1023], "unit": "kWh", "scale": 0.001, "precision": 3, "data_type": "int32", "device_class": "energy", "state_class": "total_increasing"},
 
     # Boiler
     {"name": "Boiler Error Number", "register": 2000, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
@@ -296,6 +296,11 @@ class LambdaHeatpumpSensor(Entity):
     @property
     def state_class(self):
         """Return the state class of the sensor."""
+        if self._name in [
+            "Heat Pump 1 Compressor Power Consumption Accumulated",
+            "Heat Pump 1 Compressor Thermal Energy Output Accumulated",
+        ]:
+            return "total_increasing"
         return self._state_class
 
     @property
