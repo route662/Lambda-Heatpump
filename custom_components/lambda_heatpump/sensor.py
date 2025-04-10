@@ -225,11 +225,11 @@ async def async_setup_entry(hass, entry, async_add_entities):
     ] + [
         # (sensor, "Solar") for sensor in SENSORS[41:46]  # Solar auskommentiert
     ] + [
-        (sensor, "Heating Circuit 1") for sensor in SENSORS[46:56]
+        (sensor, "Heating Circuit 1") for sensor in SENSORS[41:51]
     ] + [
-        (sensor, "Heating Circuit 2") for sensor in SENSORS[56:66]
+        (sensor, "Heating Circuit 2") for sensor in SENSORS[51:61]
     ] + [
-        (sensor, "Heating Circuit 3") for sensor in SENSORS[66:]
+        (sensor, "Heating Circuit 3") for sensor in SENSORS[61:]
     ]
 
     # Sensoren erstellen und hinzufügen
