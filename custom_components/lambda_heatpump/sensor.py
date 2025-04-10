@@ -297,8 +297,11 @@ class LambdaHeatpumpSensor(Entity):
     def state_class(self):
         """Return the state class of the sensor."""
         if self._name in [
-            "sensor.heat_pump_1_compressor_power_consumption_accumulated_2",
-            "sensor.heat_pump_1_compressor_thermal_energy_output_accumulated_2",
+            "Heat Pump 1 Compressor Power Consumption Accumulated",
+            "Heat Pump 1 Compressor Thermal Energy Output Accumulated",
+        ] or self.unique_id in [
+            "lambda_heatpump_[1020, 1021]",
+            "lambda_heatpump_[1022, 1023]",
         ]:
             return "total_increasing"
         return self._state_class
