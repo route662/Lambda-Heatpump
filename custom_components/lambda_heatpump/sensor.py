@@ -218,19 +218,19 @@ async def async_setup_entry(hass, entry, async_add_entities):
     ] + [
         (sensor, "E-Manager") for sensor in SENSORS[5:10]
     ] + [
-        (sensor, "Heat Pump No. 1") for sensor in SENSORS[10:30]
+        (sensor, "Heat Pump No. 1") for sensor in SENSORS[10:31]
     ] + [
-        (sensor, "Boiler") for sensor in SENSORS[30:35]
+        (sensor, "Boiler") for sensor in SENSORS[31:36]
     ] + [
-        (sensor, "Buffer") for sensor in SENSORS[35:40]
+        (sensor, "Buffer") for sensor in SENSORS[36:41]
     ] + [
-        (sensor, "Solar") for sensor in SENSORS[40:45]
+        (sensor, "Solar") for sensor in SENSORS[41:46]
     ] + [
-        (sensor, "Heating Circuit 1") for sensor in SENSORS[45:55]
+        (sensor, "Heating Circuit 1") for sensor in SENSORS[46:56]
     ] + [
-        (sensor, "Heating Circuit 2") for sensor in SENSORS[55:65]
+        (sensor, "Heating Circuit 2") for sensor in SENSORS[56:66]
     ] + [
-        (sensor, "Heating Circuit 3") for sensor in SENSORS[65:]
+        (sensor, "Heating Circuit 3") for sensor in SENSORS[66:]
     ]
 
     # Sensoren erstellen und hinzufügen
