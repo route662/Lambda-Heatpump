@@ -223,7 +223,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
     ] + [
         (sensor, "Buffer") for sensor in SENSORS[36:41]
     ] + [
-        (sensor, "Solar") for sensor in SENSORS[41:46]
+        # (sensor, "Solar") for sensor in SENSORS[41:46]  # Solar auskommentiert
     ] + [
         (sensor, "Heating Circuit 1") for sensor in SENSORS[46:56]
     ] + [
@@ -296,13 +296,16 @@ class LambdaHeatpumpSensor(Entity):
     @property
     def state_class(self):
         """Return the state class of the sensor."""
-        if self.entity_id in [
-            "sensor.heat_pump_1_compressor_power_consumption_accumulated",
-            "sensor.heat_pump_1_compressor_thermal_energy_output_accumulated",
+        if self.unique_id in [
+            "lambda_heatpump_[1020, 1021]",
+            "lambda_heatpump_[1022, 1023]",
+        ] or self._name in [
+            "Heat Pump 1 Compressor Power Consumption Accumulated",
+            "Heat Pump 1 Compressor Thermal Energy Output Accumulated",
         ]:
-            _LOGGER.debug(f"Setting state_class to total_increasing for entity_id {self.entity_id}")
+            _LOGGER.debug(f"Setting state_class to total_increasing for sensor {self._name} (unique_id: {self.unique_id})")
             return "total_increasing"
-        _LOGGER.debug(f"Using default state_class for entity_id {self.entity_id}")
+        _LOGGER.debug(f"Using default state_class for sensor {self._name} (unique_id: {self.unique_id})")
         return self._state_class
 
     @property
@@ -318,7 +321,7 @@ class LambdaHeatpumpSensor(Entity):
             "name": self._device_name,
             "manufacturer": "Lambda",
             "model": "Heatpump Eureka-Luft (EU-L)",
-            "sw_version": "1.2.13",            
+            "sw_version": "1.2.21",            
         }
     async def async_update(self):
         """Update the entity."""
