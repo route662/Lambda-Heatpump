@@ -176,10 +176,9 @@ class ModbusClientManager:
                         _LOGGER.error(f"Error reading register {sensor['register']} for sensor: {sensor['name']}")
                         data[sensor["name"]] = None
                     else:
-                        # Skalierung und Präzision anwenden
+                        # In der fetch_data-Methode
                         raw_value = result.registers[0]
-                        scaled_value = raw_value * sensor.get("scale", 1)
-                        data[sensor["name"]] = round(scaled_value, sensor.get("precision", 0))
+                        data[sensor["name"]] = raw_value  # Skalierung hier entfernen
 
             except Exception as e:
                 _LOGGER.error(f"Failed to fetch data for sensor {sensor['name']}: {e}")
