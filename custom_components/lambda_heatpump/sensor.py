@@ -296,14 +296,13 @@ class LambdaHeatpumpSensor(Entity):
     @property
     def state_class(self):
         """Return the state class of the sensor."""
-        if self._name in [
-            "Heat Pump 1 Compressor Power Consumption Accumulated",
-            "Heat Pump 1 Compressor Thermal Energy Output Accumulated",
-        ] or self.unique_id in [
-            "lambda_heatpump_[1020, 1021]",
-            "lambda_heatpump_[1022, 1023]",
+        if self.entity_id in [
+            "sensor.heat_pump_1_compressor_power_consumption_accumulated",
+            "sensor.heat_pump_1_compressor_thermal_energy_output_accumulated",
         ]:
+            _LOGGER.debug(f"Setting state_class to total_increasing for entity_id {self.entity_id}")
             return "total_increasing"
+        _LOGGER.debug(f"Using default state_class for entity_id {self.entity_id}")
         return self._state_class
 
     @property
