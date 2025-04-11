@@ -22,7 +22,7 @@ SENSORS = [
     {"name": "E-Manager Error Number", "register": 100, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "E-Manager Operating State", "register": 101, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
      "description_map": ["Off", "Automatik", "Manual", "Error", "Offline"]},
-    {"name": "E-Manager Actual Power", "register": 102, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
+    {"name": "E-Manager Actual Power", "register": 102, "unit": "W", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total"},
     {"name": "E-Manager Actual Power Consumption", "register": 103, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "E-Manager Power Consumption Setpoint", "register": 104, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
 
