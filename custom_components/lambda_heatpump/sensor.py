@@ -316,18 +316,6 @@ class LambdaHeatpumpSensor(Entity):
     @property
     def device_info(self):
         """Return device information for grouping sensors."""
-        # Piktogramme basierend auf der Gruppierung
-        icons = {
-            "General Ambient": "mdi:weather-cloudy",
-            "E-Manager": "mdi:flash",
-            "Heat Pump No. 1": "mdi:heat-pump",
-            "Boiler": "mdi:water-boiler",
-            "Buffer": "mdi:water",
-            "Solar": "mdi:solar-power",
-            "Heating Circuit 1": "mdi:radiator",
-            "Heating Circuit 2": "mdi:radiator",
-            "Heating Circuit 3": "mdi:radiator",
-        }
         return {
             "identifiers": {(DOMAIN, self._device_name)},
             "name": self._device_name,
