@@ -22,7 +22,7 @@ SENSORS = [
     {"name": "E-Manager Error Number", "register": 100, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "E-Manager Operating State", "register": 101, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
      "description_map": ["Off", "Automatik", "Manual", "Error", "Offline"]},
-    {"name": "E-Manager Actual Power", "register": 102, "unit": "W", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total"},
+    {"name": "E-Manager Actual Power", "register": 102, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "E-Manager Actual Power Consumption", "register": 103, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "E-Manager Power Consumption Setpoint", "register": 104, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
 
@@ -145,14 +145,13 @@ class ModbusClientManager:
         data = {}
         for sensor in sensors:
             try:
-                # Prüfen, ob es sich um int32 handelt (2 Register)
                 if sensor.get("data_type") == "int32":
+                    # Verarbeitung für int32 (zwei Register)
                     if not isinstance(sensor["register"], list) or len(sensor["register"]) != 2:
                         _LOGGER.error(f"Invalid register configuration for int32 sensor: {sensor['name']}")
                         data[sensor["name"]] = None
                         continue
 
-                    # Zwei Register lesen (High und Low)
                     result = self.client.read_holding_registers(sensor["register"][0], 2, unit=1)
                     if result.isError():
                         _LOGGER.error(f"Error reading int32 registers for sensor: {sensor['name']}")
@@ -160,25 +159,30 @@ class ModbusClientManager:
                         continue
 
                     high, low = result.registers
-
-                    # Zusammensetzen des int32-Werts
                     value = (high << 16) + low if high < 0x8000 else ((high << 16) + low - 0x100000000)
-
-                    # Skalierung und Präzision anwenden
                     scaled_value = value * sensor.get("scale", 1)
                     data[sensor["name"]] = round(scaled_value, sensor.get("precision", 0))
 
                 else:
                     # Einzelnes Register lesen
-                    count = 1
-                    result = self.client.read_holding_registers(sensor["register"], count, unit=1)
+                    result = self.client.read_holding_registers(sensor["register"], 1, unit=1)
                     if result.isError():
                         _LOGGER.error(f"Error reading register {sensor['register']} for sensor: {sensor['name']}")
                         data[sensor["name"]] = None
                     else:
-                        # In der fetch_data-Methode
                         raw_value = result.registers[0]
-                        data[sensor["name"]] = raw_value  # Skalierung hier entfernen
+
+                        # Unterschiedliche Behandlung für uint16 und int16
+                        if sensor.get("data_type") == "int16":
+                            # Signed 16-bit Integer
+                            value = raw_value if raw_value < 0x8000 else raw_value - 0x10000
+                        else:
+                            # Unsigned 16-bit Integer
+                            value = raw_value
+
+                        # Skalierung und Präzision anwenden
+                        scaled_value = value * sensor.get("scale", 1)
+                        data[sensor["name"]] = round(scaled_value, sensor.get("precision", 0))
 
             except Exception as e:
                 _LOGGER.error(f"Failed to fetch data for sensor {sensor['name']}: {e}")
