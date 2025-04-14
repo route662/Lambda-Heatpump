@@ -154,7 +154,7 @@ class ModbusClientManager:
             # Lese alle Register in einem Block
             result = self.client.read_holding_registers(start_register, count, unit=1)
             if result.isError():
-                _LOGGER.error("Error reading registers")
+                _LOGGER.error(f"Error reading registers: {result}")
                 return {sensor["name"]: None for sensor in sensors}
 
             # Ordne die gelesenen Werte den Sensoren zu
@@ -165,10 +165,6 @@ class ModbusClientManager:
                     value = (high << 16) + low if high < 0x8000 else ((high << 16) + low - 0x100000000)
                 else:  # int16/uint16
                     raw_value = result.registers[sensor["register"] - start_register]
-                    if raw_value == 0x8000:
-                        _LOGGER.warning(f"Sensor {sensor['name']} returned an invalid value: 0x8000")
-                        data[sensor["name"]] = None
-                        continue
                     if sensor.get("data_type") == "int16":
                         value = raw_value if raw_value < 0x8000 else raw_value - 0x10000
                     else:
