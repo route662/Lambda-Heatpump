@@ -151,28 +151,32 @@ class ModbusClientManager:
             end_register = max(registers)
             count = end_register - start_register + 1
 
-            # Lese alle Register in einem Block
-            result = self.client.read_holding_registers(start_register, count, unit=1)
-            if result.isError():
-                _LOGGER.error(f"Error reading registers: {result}")
-                return {sensor["name"]: None for sensor in sensors}
+            # Lese alle Register in Blöcken
+            max_registers_per_request = 50
+            for block_start in range(start_register, end_register + 1, max_registers_per_request):
+                block_end = min(block_start + max_registers_per_request - 1, end_register)
+                block_count = block_end - block_start + 1
+                result = self.client.read_holding_registers(block_start, block_count, unit=1)
+                if result.isError():
+                    _LOGGER.error(f"Error reading registers: {result}")
+                    return {sensor["name"]: None for sensor in sensors}
 
-            # Ordne die gelesenen Werte den Sensoren zu
-            for sensor in sensors:
-                if isinstance(sensor["register"], list):  # int32
-                    high = result.registers[sensor["register"][0] - start_register]
-                    low = result.registers[sensor["register"][1] - start_register]
-                    value = (high << 16) + low if high < 0x8000 else ((high << 16) + low - 0x100000000)
-                else:  # int16/uint16
-                    raw_value = result.registers[sensor["register"] - start_register]
-                    if sensor.get("data_type") == "int16":
-                        value = raw_value if raw_value < 0x8000 else raw_value - 0x10000
-                    else:
-                        value = raw_value
+                # Ordne die gelesenen Werte den Sensoren zu
+                for sensor in sensors:
+                    if isinstance(sensor["register"], list):  # int32
+                        high = result.registers[sensor["register"][0] - start_register]
+                        low = result.registers[sensor["register"][1] - start_register]
+                        value = (high << 16) + low if high < 0x8000 else ((high << 16) + low - 0x100000000)
+                    else:  # int16/uint16
+                        raw_value = result.registers[sensor["register"] - start_register]
+                        if sensor.get("data_type") == "int16":
+                            value = raw_value if raw_value < 0x8000 else raw_value - 0x10000
+                        else:
+                            value = raw_value
 
-                # Skalierung und Präzision anwenden
-                scaled_value = value * sensor.get("scale", 1)
-                data[sensor["name"]] = round(scaled_value, sensor.get("precision", 0))
+                    # Skalierung und Präzision anwenden
+                    scaled_value = value * sensor.get("scale", 1)
+                    data[sensor["name"]] = round(scaled_value, sensor.get("precision", 0))
 
         except Exception as e:
             _LOGGER.error(f"Failed to fetch data: {e}")
