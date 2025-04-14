@@ -137,56 +137,50 @@ SENSORS = [
 
 class ModbusClientManager:
     """Manage a persistent Modbus TCP client."""
+
     def __init__(self, ip_address):
         self.client = ModbusTcpClient(ip_address)
 
     def fetch_data(self, sensors):
-        """Fetch data from the Lambda Heatpump."""
+        """Fetch data from the Lambda Heatpump using block reads."""
         data = {}
-        for sensor in sensors:
-            try:
-                if sensor.get("data_type") == "int32":
-                    # Verarbeitung für int32 (zwei Register)
-                    if not isinstance(sensor["register"], list) or len(sensor["register"]) != 2:
-                        _LOGGER.error(f"Invalid register configuration for int32 sensor: {sensor['name']}")
-                        data[sensor["name"]] = None
-                        continue
+        try:
+            # Finde den Bereich der Register
+            registers = sorted(set(sensor["register"] if isinstance(sensor["register"], int) else sensor["register"][0] for sensor in sensors))
+            start_register = min(registers)
+            end_register = max(registers)
+            count = end_register - start_register + 1
 
-                    result = self.client.read_holding_registers(sensor["register"][0], 2, unit=1)
-                    if result.isError():
-                        _LOGGER.error(f"Error reading int32 registers for sensor: {sensor['name']}")
-                        data[sensor["name"]] = None
-                        continue
+            # Lese alle Register in einem Block
+            result = self.client.read_holding_registers(start_register, count, unit=1)
+            if result.isError():
+                _LOGGER.error("Error reading registers")
+                return {sensor["name"]: None for sensor in sensors}
 
-                    high, low = result.registers
+            # Ordne die gelesenen Werte den Sensoren zu
+            for sensor in sensors:
+                if isinstance(sensor["register"], list):  # int32
+                    high = result.registers[sensor["register"][0] - start_register]
+                    low = result.registers[sensor["register"][1] - start_register]
                     value = (high << 16) + low if high < 0x8000 else ((high << 16) + low - 0x100000000)
-                    scaled_value = value * sensor.get("scale", 1)
-                    data[sensor["name"]] = round(scaled_value, sensor.get("precision", 0))
-
-                else:
-                    # Einzelnes Register lesen
-                    result = self.client.read_holding_registers(sensor["register"], 1, unit=1)
-                    if result.isError():
-                        _LOGGER.error(f"Error reading register {sensor['register']} for sensor: {sensor['name']}")
+                else:  # int16/uint16
+                    raw_value = result.registers[sensor["register"] - start_register]
+                    if raw_value == 0x8000:
+                        _LOGGER.warning(f"Sensor {sensor['name']} returned an invalid value: 0x8000")
                         data[sensor["name"]] = None
+                        continue
+                    if sensor.get("data_type") == "int16":
+                        value = raw_value if raw_value < 0x8000 else raw_value - 0x10000
                     else:
-                        raw_value = result.registers[0]
+                        value = raw_value
 
-                        # Unterschiedliche Behandlung für uint16 und int16
-                        if sensor.get("data_type") == "int16":
-                            # Signed 16-bit Integer
-                            value = raw_value if raw_value < 0x8000 else raw_value - 0x10000
-                        else:
-                            # Unsigned 16-bit Integer
-                            value = raw_value
+                # Skalierung und Präzision anwenden
+                scaled_value = value * sensor.get("scale", 1)
+                data[sensor["name"]] = round(scaled_value, sensor.get("precision", 0))
 
-                        # Skalierung und Präzision anwenden
-                        scaled_value = value * sensor.get("scale", 1)
-                        data[sensor["name"]] = round(scaled_value, sensor.get("precision", 0))
-
-            except Exception as e:
-                _LOGGER.error(f"Failed to fetch data for sensor {sensor['name']}: {e}")
-                data[sensor["name"]] = None
+        except Exception as e:
+            _LOGGER.error(f"Failed to fetch data: {e}")
+            data = {sensor["name"]: None for sensor in sensors}
 
         return data
 
@@ -325,7 +319,7 @@ class LambdaHeatpumpSensor(Entity):
             "name": self._device_name,
             "manufacturer": "Lambda",
             "model": "Heatpump Eureka-Luft (EU-L)",
-            "sw_version": "1.2.25",
+#            "sw_version": "1.2.25",
             "icon": icons.get(self._device_name, "mdi:gauge"),  # Standard-Icon, falls keine Übereinstimmung
         }
 
