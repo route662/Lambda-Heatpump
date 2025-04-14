@@ -136,15 +136,18 @@ SENSORS = [
 ]
 
 REGISTER_BLOCKS = [
-    (0, 4),    # General Ambient: Register 0 bis 4
-    (100, 104),  # E-Manager: Register 100 bis 104
-    (1000, 1019),  # Heat Pump No. 1: Register 1000 bis 1019
-    (1020, 1023),  # Heat Pump No. 1 (int32): Register 1020 bis 1023
-    (2000, 2003),  # Boiler: Register 2000 bis 2003
-    (3000, 3003),  # Buffer: Register 3000 bis 3003
-    (5000, 5052),  # Heating Circuit 1: Register 5000 bis 5052
-    (5100, 5152),  # Heating Circuit 2: Register 5100 bis 5152
-    (5200, 5252),  # Heating Circuit 3: Register 5200 bis 5252
+    (0, 4),       # General Ambient: Register 0 bis 4
+    (100, 104),   # E-Manager: Register 100 bis 104
+    (1000, 1019), # Heat Pump No. 1: Register 1000 bis 1019
+    (1020, 1023), # Heat Pump No. 1 (int32): Register 1020 bis 1023
+    (2000, 2003), # Boiler: Register 2000 bis 2003
+    (3000, 3003), # Buffer: Register 3000 bis 3003
+    (5000, 5006), # Heating Circuit 1: Register 5000 bis 5006
+    (5050, 5052), # Heating Circuit 1: Register 5050 bis 5052
+    (5100, 5106), # Heating Circuit 2: Register 5100 bis 5106
+    (5150, 5152), # Heating Circuit 2: Register 5150 bis 5152
+    (5200, 5206), # Heating Circuit 3: Register 5200 bis 5206
+    (5250, 5252), # Heating Circuit 3: Register 5250 bis 5252
 ]
 
 class ModbusClientManager:
