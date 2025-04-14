@@ -320,7 +320,7 @@ class LambdaHeatpumpSensor(Entity):
             "manufacturer": "Lambda",
             "model": "Heatpump Eureka-Luft (EU-L)",
 #            "sw_version": "1.2.25",
-            "icon": icons.get(self._device_name, "mdi:gauge"),  # Standard-Icon, falls keine Übereinstimmung
+#            "icon": icons.get(self._device_name, "mdi:gauge"),  # Standard-Icon, falls keine Übereinstimmung
         }
 
     async def async_update(self):
