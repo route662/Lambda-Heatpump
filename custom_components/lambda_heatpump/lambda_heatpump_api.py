@@ -1,5 +1,5 @@
 """API for communicating with Lambda Heatpump via Modbus TCP."""
-from pymodbus.client.sync import ModbusTcpClient
+from pymodbus.client import ModbusTcpClient
 
 async def detect_lambda_model(ip_address):
     """Detect the Lambda Heatpump model."""

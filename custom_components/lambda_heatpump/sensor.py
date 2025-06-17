@@ -1,7 +1,7 @@
 """Sensor handling for Lambda Heatpump."""
 from datetime import timedelta
 import logging
-from pymodbus.client.sync import ModbusTcpClient
+from pymodbus.client import ModbusTcpClient
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from . import DOMAIN
@@ -167,7 +167,7 @@ class ModbusClientManager:
                 _LOGGER.debug(f"Reading registers from {start_register} to {end_register} (count: {count})")
 
                 # Lese die Register im definierten Block
-                result = self.client.read_holding_registers(start_register, count, unit=1)
+                result = self.client.read_holding_registers(start_register, count=count, slave=1)
                 if result.isError():
                     _LOGGER.error(f"Error reading registers from {start_register} to {end_register}: {result}")
                     continue
