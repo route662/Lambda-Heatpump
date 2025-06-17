@@ -1,9 +1,9 @@
 {
   "domain": "lambda_heatpump",
   "name": "Lambda Heatpump",
-  "version": "1.3.6",
+  "version": "1.3.7",
   "config_flow": true,
-  "requirements": ["pymodbus==2.5.3"],
+  "requirements": ["pymodbus>=3.9.2"],
   "codeowners": ["@route662"],
   "iot_class": "local_polling"
 }
