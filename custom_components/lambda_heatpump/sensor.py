@@ -169,13 +169,15 @@ class ModbusClientManager:
                 _LOGGER.debug(f"Reading registers from {start_register} to {end_register} (count: {count})")
 
                 # Lese die Register im definierten Block
-               # result = self.client.read_holding_registers(start_register, count=count, unit=1)
+                #result = self.client.read_holding_registers(start_register, count=count, unit=1)
+                result = self.client.read_holding_registers(start_register, count=count, device_id=1)
+                
 
 
-                try:
-                    result = self.client.read_holding_registers(start_register, count=count, unit=1)
-                except TypeError:
-                    result = self.client.read_holding_registers(start_register, count=count, slave=1)
+                #try:
+                  #  result = self.client.read_holding_registers(start_register, count=count, unit=1)
+                #except TypeError:
+                    #result = self.client.read_holding_registers(start_register, count=count, slave=1)
 
 
 
