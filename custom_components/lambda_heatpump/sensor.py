@@ -2,6 +2,7 @@
 from datetime import timedelta
 import logging
 from pymodbus.client import ModbusTcpClient
+from pymodbus import __version__ as pymodbus_version
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from . import DOMAIN
@@ -157,6 +158,7 @@ class ModbusClientManager:
 
     def __init__(self, ip_address):
         self.client = ModbusTcpClient(ip_address)
+        _LOGGER.info("Lambda Heatpump: using pymodbus %s", pymodbus_version)
 
     def fetch_data(self, sensors):
         """Fetch data from the Lambda Heatpump using predefined register blocks."""
