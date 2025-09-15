@@ -251,11 +251,14 @@ async def async_setup_entry(hass, entry, async_add_entities):
         # (sensor, "Solar") for sensor in SENSORS[41:46]  # Solar auskommentiert
     ] + [
         (sensor, "Heating Circuit 1") for sensor in SENSORS[41:51]
-    ] + [
-        (sensor, "Heating Circuit 2") for sensor in SENSORS[51:61]
-    ] + [
-        (sensor, "Heating Circuit 3") for sensor in SENSORS[61:]
     ]
+
+    # Optionale Heizkreise (basierend auf Konfiguration)
+    if entry.data.get("has_heat_circuit_2", False):
+        grouped_sensors += [(sensor, "Heating Circuit 2") for sensor in SENSORS[51:61]]
+
+    if entry.data.get("has_heat_circuit_3", False):
+        grouped_sensors += [(sensor, "Heating Circuit 3") for sensor in SENSORS[61:]]
 
     # Sensoren erstellen und hinzufügen
     sensors = [LambdaHeatpumpSensor(coordinator, sensor, device_name) for sensor, device_name in grouped_sensors]

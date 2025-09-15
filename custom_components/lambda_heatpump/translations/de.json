@@ -4,10 +4,12 @@
       "user": {
         "data": {
           "ip_address": "IP-Adresse",
-          "update_interval": "Abfrageintervall (Sekunden)"
+          "update_interval": "Abfrageintervall (Sekunden)",
+          "has_heat_circuit_2": "Heizkreis 2 vorhanden",
+          "has_heat_circuit_3": "Heizkreis 3 vorhanden"
         },
         "title": "Lambda Heatpump Konfiguration",
-        "description": "Bitte geben Sie die IP-Adresse der Wärmepumpe und das Abfrageintervall ein."
+        "description": "Bitte geben Sie die IP-Adresse der Wärmepumpe und das Abfrageintervall ein. Falls die Heizkreise 2 und 3 nicht existieren bitte entsprechend markieren."
       }
     },
     "error": {
