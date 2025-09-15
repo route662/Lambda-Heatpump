@@ -4,10 +4,12 @@
       "user": {
         "data": {
           "ip_address": "IP Address",
-          "update_interval": "Update Interval (seconds)"
+          "update_interval": "Update Interval (seconds)",
+          "has_heat_circuit_2": "Heating Circuit 2 exists",
+          "has_heat_circuit_3": "Heating Circuit 3 exists"
         },
         "title": "Lambda Heatpump Configuration",
-        "description": "Please enter the IP address of the heat pump and the update interval."
+        "description": "Please enter the IP address of the heat pump and the update interval. If heating circuits 2 and 3 do not exist, please mark accordingly."
       }
     },
     "error": {

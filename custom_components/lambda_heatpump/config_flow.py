@@ -35,6 +35,8 @@ class LambdaHeatpumpConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             data_schema=vol.Schema({
                 vol.Required(CONF_IP_ADDRESS): cv.string,
                 vol.Optional("update_interval", default=30): vol.All(vol.Coerce(int), vol.Range(min=10, max=3600)),
+                vol.Optional("has_heat_circuit_2", default=True): cv.boolean,
+                vol.Optional("has_heat_circuit_3", default=True): cv.boolean,
             }),
             errors=errors,
         )
