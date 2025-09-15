@@ -147,24 +147,31 @@ REGISTER_BLOCKS = [
     (3050, 3050), # Buffer: Register 3050
     (5000, 5006), # Heating Circuit 1: Register 5000 bis 5006
     (5050, 5052), # Heating Circuit 1: Register 5050 bis 5052
-    (5100, 5106), # Heating Circuit 2: Register 5100 bis 5106
-    (5150, 5152), # Heating Circuit 2: Register 5150 bis 5152
-    (5200, 5206), # Heating Circuit 3: Register 5200 bis 5206
-    (5250, 5252), # Heating Circuit 3: Register 5250 bis 5252
+]
+
+REGISTER_BLOCKS_CIRCUIT_2 = [
+        (5100, 5106), # Heating Circuit 2
+        (5150, 5152), # Heating Circuit 2
+]
+
+REGISTER_BLOCKS_CIRCUIT_3 = [
+        (5200, 5206), # Heating Circuit 3
+        (5250, 5252), # Heating Circuit 3
 ]
 
 class ModbusClientManager:
     """Manage a persistent Modbus TCP client."""
 
-    def __init__(self, ip_address):
+    def __init__(self, ip_address, register_blocks):
         self.client = ModbusTcpClient(ip_address)
+        self.register_blocks = register_blocks
         _LOGGER.info("Lambda Heatpump: using pymodbus %s", pymodbus_version)
 
     def fetch_data(self, sensors):
         """Fetch data from the Lambda Heatpump using predefined register blocks."""
         data = {}
         try:
-            for start_register, end_register in REGISTER_BLOCKS:
+            for start_register, end_register in self.register_blocks:
                 count = end_register - start_register + 1
                 _LOGGER.debug(f"Reading registers from {start_register} to {end_register} (count: {count})")
 
@@ -220,7 +227,13 @@ async def async_setup_entry(hass, entry, async_add_entities):
     ip_address = entry.data["ip_address"]
     update_interval = timedelta(seconds=entry.data.get("update_interval", 30))  # Standard: 30 Sekunden
 
-    client_manager = ModbusClientManager(ip_address)
+    register_blocks = list(REGISTER_BLOCKS)
+    if entry.data.get("has_heat_circuit_2", True):
+        register_blocks += REGISTER_BLOCKS_CIRCUIT_2
+    if entry.data.get("has_heat_circuit_3", True):
+        register_blocks += REGISTER_BLOCKS_CIRCUIT_3
+
+    client_manager = ModbusClientManager(ip_address, register_blocks)
 
     async def async_update_data():
         """Fetch data from the heat pump."""
@@ -254,10 +267,10 @@ async def async_setup_entry(hass, entry, async_add_entities):
     ]
 
     # Optionale Heizkreise (basierend auf Konfiguration)
-    if entry.data.get("has_heat_circuit_2", False):
+    if entry.data.get("has_heat_circuit_2", True):
         grouped_sensors += [(sensor, "Heating Circuit 2") for sensor in SENSORS[51:61]]
 
-    if entry.data.get("has_heat_circuit_3", False):
+    if entry.data.get("has_heat_circuit_3", True):
         grouped_sensors += [(sensor, "Heating Circuit 3") for sensor in SENSORS[61:]]
 
     # Sensoren erstellen und hinzufügen
