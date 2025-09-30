@@ -14,7 +14,7 @@ SENSORS = [
     # General Ambient
     {"name": "Ambient Error Number", "register": 0, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "Ambient Operating State", "register": 1, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
-     "description_map": ["Off", "Automatik", "Manual", "Error"]},
+     "description_map": ["Aus", "Automatik", "Manuell", "Fehler"]},
     {"name": "Ambient Temperature", "register": 2, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Ambient Temperature 1h", "register": 3, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Ambient Temperature Calculated", "register": 4, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
@@ -22,25 +22,25 @@ SENSORS = [
     # General E-Manager
     {"name": "E-Manager Error Number", "register": 100, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "E-Manager Operating State", "register": 101, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
-     "description_map": ["Off", "Automatik", "Manual", "Error", "Offline"]},
+     "description_map": ["Aus", "Automatik", "Manuell", "Fehler", "Offline"]},
     {"name": "E-Manager Actual Power", "register": 102, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "E-Manager Actual Power Consumption", "register": 103, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "E-Manager Power Consumption Setpoint", "register": 104, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
 
     # Heat Pump No. 1
     {"name": "Heat Pump 1 Error State", "register": 1000, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
-     "description_map": ["OK", "Message", "Warnung", "Alarm", "Fault"]},
+     "description_map": ["OK", "Nachricht", "Warnung", "Alarm", "Störung"]},
     {"name": "Heat Pump 1 Error Number", "register": 1001, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "Heat Pump 1 State", "register": 1002, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
-     "description_map": ["Init", "Reference", "Restart-Block", "Ready", "Start Pumps", "Start Compressor", "Pre-Regulation", "Regulation",
-                         "Not Used", "Cooling", "Defrosting", "Not Used", "Not Used", "Not Used", "Not Used", "Not Used", "Not Used",
-                         "Not Used", "Not Used", "Not Used", "Stopping", "Not Used", "Not Used", "Not Used", "Not Used", "Not Used",
-                         "Not Used", "Not Used", "Not Used", "Not Used", "Not Used", "Fault-Lock", "Alarm-Block", "Not Used", "Not Used",
-                         "Not Used", "Not Used", "Not Used", "Not Used", "Error-Reset"]},
+     "description_map": ["Initialisierung", "Referenz", "Neustart-Sperre", "Bereit", "Pumpen starten", "Kompressor starten", "Vorregelung", "Regelung",
+                         "Nicht verwendet", "Kühlen", "Abtauen", "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Nicht verwendet",
+                         "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Anhalten", "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Nicht verwendet",
+                         "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Fehlersperre", "Alarm-Sperre", "Nicht verwendet", "Nicht verwendet",
+                         "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Fehler-Reset"]},
     {"name": "Heat Pump 1 Operating State", "register": 1003, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
-     "description_map": ["Standby", "Central Heating", "Domestic Hot Water", "Cold Climate", "Circulate", "Defrost", "Off", "Frost",
-                         "Standby-Frost", "Not used", "Summer", "Holiday", "Error", "Warning", "Info-Message", "Time-Block", "Release-Block",
-                         "Mintemp-Block", "Firmware-Download"]},
+     "description_map": ["Standby", "Zentralheizung", "Warmwasser", "Kaltklima", "Zirkulation", "Abtauen", "Aus", "Frost",
+                         "Standby-Frost", "Nicht verwendet", "Sommer", "Urlaub", "Fehler", "Warnung", "Info-Nachricht", "Zeitsperre", "Freigabe-Sperre",
+                         "Mindesttemperatur-Sperre", "Firmware-Download"]},
     {"name": "Heat Pump 1 Flow Line Temperature", "register": 1004, "unit": "°C", "scale": 0.01, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heat Pump 1 Return Line Temperature", "register": 1005, "unit": "°C", "scale": 0.01, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heat Pump 1 Volume Flow Heat Sink", "register": 1006, "unit": "l/h", "scale": 1, "precision": 1, "data_type": "int16", "state_class": "total"},
@@ -52,7 +52,7 @@ SENSORS = [
     {"name": "Heat Pump 1 Inverter Power Consumption", "register": 1012, "unit": "W", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "Heat Pump 1 COP", "register": 1013, "unit": "", "scale": 0.01, "precision": 2, "data_type": "int16", "state_class": "total"},
     {"name": "Heat Pump 1 Request Type", "register": 1015, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total",
-     "description_map": ["No Request", "Flow Pump Circulation", "Central Heating", "Central Cooling", "Domestic Hot Water"]},
+     "description_map": ["Keine Anforderung", "Umwälzpumpe", "Zentralheizung", "Zentralkühlung", "Warmwasser"]},
     {"name": "Heat Pump 1 Requested Flow Line Temperature", "register": 1016, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heat Pump 1 Requested Return Line Temperature", "register": 1017, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heat Pump 1 Requested Flow to Return Line Temperature Difference", "register": 1018, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
@@ -63,8 +63,8 @@ SENSORS = [
     # Boiler
     {"name": "Boiler Error Number", "register": 2000, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "Boiler Operating State", "register": 2001, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
-     "description_map": ["Standby", "Domestic Hot Water", "Legio", "Summer", "Frost", "Holiday", "Prio-Stop", "Error", "Off", "Prompt-DHW",
-                         "Trailing-Stop", "Temp-Lock", "Standby-Frost"]},
+     "description_map": ["Standby", "Warmwasser", "Legio", "Sommer", "Frostschutz", "Urlaub", "Prioritätsstopp", "Fehler", "Aus", "Schnell-Warmwasser",
+                         "Nachlauf-Stopp", "Temperatur-Sperre", "Standby-Frostschutz"]},
     {"name": "Boiler Actual High Temperature", "register": 2002, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Boiler Actual Low Temperature", "register": 2003, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Boiler Set Temperature", "register": 2050, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
@@ -72,33 +72,23 @@ SENSORS = [
     # Buffer
     {"name": "Buffer Error Number", "register": 3000, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "Buffer Operating State", "register": 3001, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
-     "description_map": ["Standby", "Heating", "Cooling", "Summer", "Frost", "Holiday", "Prio-Stop", "Error", "Off", "Standby-Frost"]},
+     "description_map": ["Standby", "Heizen", "Kühlen", "Sommer", "Frostschutz", "Urlaub", "Prioritätsstopp", "Fehler", "Aus", "Standby-Frostschutz"]},
     {"name": "Buffer Actual High Temperature", "register": 3002, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Buffer Actual Low Temperature", "register": 3003, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Buffer Set Temperature", "register": 3050, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
 
-    # Solar
-#    {"name": "Solar Error Number", "register": 4000, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
-#    {"name": "Solar Operating State", "register": 4001, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
-#     "description_map": ["Standby", "Heating", "Error", "Off"]},
-#    {"name": "Solar Actual Collector Temperature", "register": 4002, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
-#    {"name": "Solar Actual Buffer Sensor 1 Temperature", "register": 4003, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
-#    {"name": "Solar Actual Buffer Sensor 2 Temperature", "register": 4004, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
-#    {"name": "Solar Set Max Buffer Temperature", "register": 4050, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
-#    {"name": "Solar Set Buffer Changeover Temperature", "register": 4051, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
-
     # Heating Circuit 1
     {"name": "Heating Circuit 1 Error Number", "register": 5000, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "Heating Circuit 1 Operating State", "register": 5001, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
-     "description_map": ["Heating", "Eco", "Cooling", "Floor-dry", "Frost", "Max-Temp", "Error", "Service", "Holiday", "Central Heating Summer",
-                         "Central Cooling Winter", "Prio-Stop", "Off", "Release-Off", "Time-Off", "Standby", "Standby-Heating", "Standby-Eco",
-                         "Standby-Cooling", "Standby-Frost", "Standby-Floor-dry"]},
+     "description_map": ["Heizen", "Eco", "Kühlen", "Estrichtrocknung", "Frostschutz", "Max-Temp", "Fehler", "Service", "Urlaub", "Zentralheizung Sommer",
+                         "Zentralkühlung Winter", "Prioritätsstopp", "Aus", "Freigabe-Aus", "Zeit-Aus", "Standby", "Standby-Heizen", "Standby-Eco",
+                         "Standby-Kühlen", "Standby-Frost", "Standby-Estrich"]},
     {"name": "Heating Circuit 1 Flow Line Temperature", "register": 5002, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 1 Return Line Temperature", "register": 5003, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 1 Room Device Temperature", "register": 5004, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 1 Set Flow Line Temperature", "register": 5005, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 1 Operating Mode", "register": 5006, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total",
-     "description_map": ["Off", "Manual", "Automatik", "Auto-Heating", "Auto-Cooling", "Frost", "Summer", "Floor-dry"]},
+     "description_map": ["Aus", "Manuell", "Automatik", "Auto-Heizen", "Auto-Kühlen", "Frostschutz", "Sommer", "Estrichtrocknung"]},
     {"name": "Heating Circuit 1 Set Flow Line Offset Temperature", "register": 5050, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 1 Set Heating Mode Room Temperature", "register": 5051, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 1 Set Cooling Mode Room Temperature", "register": 5052, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
@@ -106,15 +96,15 @@ SENSORS = [
     # Heating Circuit 2
     {"name": "Heating Circuit 2 Error Number", "register": 5100, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "Heating Circuit 2 Operating State", "register": 5101, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
-     "description_map": ["Heating", "Eco", "Cooling", "Floor-dry", "Frost", "Max-Temp", "Error", "Service", "Holiday", "Central Heating Summer",
-                         "Central Cooling Winter", "Prio-Stop", "Off", "Release-Off", "Time-Off", "Standby", "Standby-Heating", "Standby-Eco",
-                         "Standby-Cooling", "Standby-Frost", "Standby-Floor-dry"]},
+     "description_map": ["Heizen", "Eco", "Kühlen", "Estrichtrocknung", "Frostschutz", "Max-Temp", "Fehler", "Service", "Urlaub", "Zentralheizung Sommer",
+                         "Zentralkühlung Winter", "Prioritätsstopp", "Aus", "Freigabe-Aus", "Zeit-Aus", "Standby", "Standby-Heizen", "Standby-Eco",
+                         "Standby-Kühlen", "Standby-Frost", "Standby-Estrich"]},
     {"name": "Heating Circuit 2 Flow Line Temperature", "register": 5102, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 2 Return Line Temperature", "register": 5103, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 2 Room Device Temperature", "register": 5104, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 2 Set Flow Line Temperature", "register": 5105, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 2 Operating Mode", "register": 5106, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total",
-     "description_map": ["Off", "Manual", "Automatik", "Auto-Heating", "Auto-Cooling", "Frost", "Summer", "Floor-dry"]},
+     "description_map": ["Aus", "Manuell", "Automatik", "Auto-Heizen", "Auto-Kühlen", "Frostschutz", "Sommer", "Estrichtrocknung"]},
     {"name": "Heating Circuit 2 Set Flow Line Offset Temperature", "register": 5150, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 2 Set Heating Mode Room Temperature", "register": 5151, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 2 Set Cooling Mode Room Temperature", "register": 5152, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
@@ -122,15 +112,15 @@ SENSORS = [
     # Heating Circuit 3
     {"name": "Heating Circuit 3 Error Number", "register": 5200, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "Heating Circuit 3 Operating State", "register": 5201, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
-     "description_map": ["Heating", "Eco", "Cooling", "Floor-dry", "Frost", "Max-Temp", "Error", "Service", "Holiday", "Central Heating Summer",
-                         "Central Cooling Winter", "Prio-Stop", "Off", "Release-Off", "Time-Off", "Standby", "Standby-Heating", "Standby-Eco",
-                         "Standby-Cooling", "Standby-Frost", "Standby-Floor-dry"]},
+     "description_map": ["Heizen", "Eco", "Kühlen", "Estrichtrocknung", "Frostschutz", "Max-Temp", "Fehler", "Service", "Urlaub", "Zentralheizung Sommer",
+                         "Zentralkühlung Winter", "Prioritätsstopp", "Aus", "Freigabe-Aus", "Zeit-Aus", "Standby", "Standby-Heizen", "Standby-Eco",
+                         "Standby-Kühlen", "Standby-Frost", "Standby-Estrich"]},
     {"name": "Heating Circuit 3 Flow Line Temperature", "register": 5202, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 3 Return Line Temperature", "register": 5203, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 3 Room Device Temperature", "register": 5204, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 3 Set Flow Line Temperature", "register": 5205, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 3 Operating Mode", "register": 5206, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total",
-     "description_map": ["Off", "Manual", "Automatik", "Auto-Heating", "Auto-Cooling", "Frost", "Summer", "Floor-dry"]},
+     "description_map": ["Aus", "Manuell", "Automatik", "Auto-Heizen", "Auto-Kühlen", "Frostschutz", "Sommer", "Estrichtrocknung"]},
     {"name": "Heating Circuit 3 Set Flow Line Offset Temperature", "register": 5250, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 3 Set Heating Mode Room Temperature", "register": 5251, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 3 Set Cooling Mode Room Temperature", "register": 5252, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
@@ -178,18 +168,12 @@ class ModbusClientManager:
                 # Lese die Register im definierten Block
                 #result = self.client.read_holding_registers(start_register, count=count, unit=1)
                 result = self.client.read_holding_registers(start_register, count=count, device_id=1)
-                
-
 
                 #try:
                   #  result = self.client.read_holding_registers(start_register, count=count, unit=1)
                 #except TypeError:
                     #result = self.client.read_holding_registers(start_register, count=count, slave=1)
 
-
-
-
-                
                 if result.isError():
                     _LOGGER.error(f"Error reading registers from {start_register} to {end_register}: {result}")
                     continue
