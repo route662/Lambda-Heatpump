@@ -38,8 +38,8 @@ SENSORS = [
                          "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Fehlersperre", "Alarm-Sperre", "Nicht verwendet", "Nicht verwendet",
                          "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Nicht verwendet", "Fehler-Reset"]},
     {"name": "Heat Pump 1 Operating State", "register": 1003, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
-     "description_map": ["Standby", "Zentralheizung", "Warmwasser", "Kaltklima", "Zirkulation", "Abtauen", "Aus", "Frost",
-                         "Standby-Frost", "Nicht verwendet", "Sommer", "Urlaub", "Fehler", "Warnung", "Info-Nachricht", "Zeitsperre", "Freigabe-Sperre",
+     "description_map": ["Bereitschaft", "Zentralheizung", "Warmwasser", "Kaltklima", "Zirkulation", "Abtauen", "Aus", "Frostschutz",
+                         "Bereitschaft-Frostschutz", "Nicht verwendet", "Sommer", "Urlaub", "Fehler", "Warnung", "Info-Nachricht", "Zeitsperre", "Freigabe-Sperre",
                          "Mindesttemperatur-Sperre", "Firmware-Download"]},
     {"name": "Heat Pump 1 Flow Line Temperature", "register": 1004, "unit": "°C", "scale": 0.01, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heat Pump 1 Return Line Temperature", "register": 1005, "unit": "°C", "scale": 0.01, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
@@ -63,8 +63,8 @@ SENSORS = [
     # Boiler
     {"name": "Boiler Error Number", "register": 2000, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "Boiler Operating State", "register": 2001, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
-     "description_map": ["Standby", "Warmwasser", "Legio", "Sommer", "Frostschutz", "Urlaub", "Prioritätsstopp", "Fehler", "Aus", "Schnell-Warmwasser",
-                         "Nachlauf-Stopp", "Temperatur-Sperre", "Standby-Frostschutz"]},
+     "description_map": ["Bereitschaft", "Warmwasser", "Legio", "Sommer", "Frostschutz", "Urlaub", "Prioritätsstopp", "Fehler", "Aus", "Schnell-Warmwasser",
+                         "Nachlauf-Stopp", "Temperatur-Sperre", "Bereitschaft-Frostschutz"]},
     {"name": "Boiler Actual High Temperature", "register": 2002, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Boiler Actual Low Temperature", "register": 2003, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Boiler Set Temperature", "register": 2050, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
@@ -72,10 +72,20 @@ SENSORS = [
     # Buffer
     {"name": "Buffer Error Number", "register": 3000, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "Buffer Operating State", "register": 3001, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
-     "description_map": ["Standby", "Heizen", "Kühlen", "Sommer", "Frostschutz", "Urlaub", "Prioritätsstopp", "Fehler", "Aus", "Standby-Frostschutz"]},
+     "description_map": ["Bereitschaft", "Heizen", "Kühlen", "Sommer", "Frostschutz", "Urlaub", "Prioritätsstopp", "Fehler", "Aus", "Bereitschaft-Frostschutz"]},
     {"name": "Buffer Actual High Temperature", "register": 3002, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Buffer Actual Low Temperature", "register": 3003, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Buffer Set Temperature", "register": 3050, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+
+    # Solar
+#    {"name": "Solar Error Number", "register": 4000, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
+#    {"name": "Solar Operating State", "register": 4001, "unit": "", "scale": 1, "precision": 0, "data_type": "uint16", "state_class": "total",
+#     "description_map": ["Bereitschaft", "Heizen", "Fehler", "Aus"]},
+#    {"name": "Solar Actual Collector Temperature", "register": 4002, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+#    {"name": "Solar Actual Buffer Sensor 1 Temperature", "register": 4003, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+#    {"name": "Solar Actual Buffer Sensor 2 Temperature", "register": 4004, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+#    {"name": "Solar Set Max Buffer Temperature", "register": 4050, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+#    {"name": "Solar Set Buffer Changeover Temperature", "register": 4051, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
 
     # Heating Circuit 1
     {"name": "Heating Circuit 1 Error Number", "register": 5000, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
