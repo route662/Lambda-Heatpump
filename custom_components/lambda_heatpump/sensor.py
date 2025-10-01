@@ -602,15 +602,26 @@ class LambdaHeatpumpSensor(Entity):
         raw_value = self._coordinator.data.get(self._name)
         if (raw_value is None) or (raw_value == 0x8000):
             return None
-        # Verwenden der description_map, falls vorhanden
-        if self._description_map:
-            try:
-                return self._description_map[int(raw_value)]
-            except IndexError:
-                return f"Unknown ({raw_value})"
         # Rückgabe des Werts ohne zusätzliche Skalierung
         return round(raw_value, self._precision)
 
+    @property
+    def extra_state_attributes(self):
+        """Return additional attributes for the sensor."""
+        if not self._description_map:
+            return None
+
+        raw_value = self._coordinator.data.get(self._name)
+        if (raw_value is None) or (raw_value == 0x8000):
+            return None
+
+        try:
+            description = self._description_map[int(raw_value)]
+        except (IndexError, ValueError, TypeError):
+            description = f"Unknown ({raw_value})"
+
+        return {"description": description}
+    
     @property
     def unit_of_measurement(self):
         """Return the unit of measurement."""
