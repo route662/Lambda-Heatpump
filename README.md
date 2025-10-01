@@ -7,6 +7,11 @@ This is a custom integration for Home Assistant to monitor and retrieve data fro
 - Fully configurable update intervals.
 - Persistent Modbus TCP connection to ensure stable communication.
 
+### Sensor states and descriptions
+- Sensors that represent enumerations keep their numeric Modbus register value as the main state.
+- A human-readable text for these values is now exposed via the entity attribute `description`.
+- When the integration receives an undefined index, the attribute falls back to the format `Unknown (<value>)`.
+
 ## Installation
 ### Option 1: Install via [HACS](https://hacs.xyz/)
 1. Ensure that [HACS](https://hacs.xyz/) is installed in your Home Assistant setup.
@@ -49,6 +54,11 @@ Dies ist eine benutzerdefinierte Integration für Home Assistant, um Daten von L
 - Echtzeitdaten wie Temperaturen, Energieverbrauch und Systemstatus abrufen.
 - Vollständig konfigurierbare Abfrageintervalle.
 - Persistente Modbus-TCP-Verbindung für stabile Kommunikation.
+
+### Sensorzustände und Beschreibungen
+- Sensoren, die Aufzählungswerte abbilden, behalten ihren numerischen Modbus-Registerwert als Hauptzustand bei.
+- Eine menschenlesbare Beschreibung wird über das neue Entitätsattribut `description` bereitgestellt.
+- Für unbekannte Indizes fällt das Attribut auf das Format `Unknown (<Wert>)` zurück.
 
 ## Installation
 ### Option 1: Installation über [HACS](https://hacs.xyz/)
