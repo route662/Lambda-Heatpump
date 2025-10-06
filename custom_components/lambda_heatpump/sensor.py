@@ -198,9 +198,10 @@ class ModbusClientManager:
                 for sensor in sensors:
                     if isinstance(sensor["register"], list):  # int32
                         if start_register <= sensor["register"][0] <= end_register:
-                            high = result.registers[sensor["register"][0] - start_register]
-                            low = result.registers[sensor["register"][1] - start_register]
-                            value = (high << 16) + low if high < 0x8000 else ((high << 16) + low - 0x100000000)
+                            low  = result.registers[sensor["register"][0] - start_register] & 0xFFFF
+                            high = result.registers[sensor["register"][1] - start_register] & 0xFFFF
+                            # Correct Modbus word order: LOW, HIGH → unsigned 32-bit
+                            value = ((high << 16) | low) & 0xFFFFFFFF
                             scaled_value = value * sensor.get("scale", 1)
                             data[sensor["name"]] = round(scaled_value, sensor.get("precision", 0))
                     elif start_register <= sensor["register"] <= end_register:  # int16/uint16
