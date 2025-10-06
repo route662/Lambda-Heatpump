@@ -1,0 +1,11 @@
+{
+  "name": "Lambda Heatpump",
+  "repository": "https://github.com/route662/Lambda-Heatpump",
+  "render_readme": true,
+  "config_flow": true,
+  "icon": "https://lambda-wp.at/wp-content/uploads/2020/02/LOGO-LAMBDA-1.png",
+  "domains": ["lambda_heatpump"],
+  "iot_class": "local_polling",
+  "country": ["DE", "AT"],
+  "zip_release": false
+}
