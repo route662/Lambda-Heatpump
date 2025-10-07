@@ -198,10 +198,30 @@ class ModbusClientManager:
                 for sensor in sensors:
                     if isinstance(sensor["register"], list):  # int32
                         if start_register <= sensor["register"][0] <= end_register:
-                            low  = result.registers[sensor["register"][0] - start_register] & 0xFFFF
-                            high = result.registers[sensor["register"][1] - start_register] & 0xFFFF
-                            # Correct Modbus word order: LOW, HIGH → unsigned 32-bit
-                            value = ((high << 16) | low) & 0xFFFFFFFF
+                            low  = result.registers[sensor["register"][0] - start_register] & 0xFFFF  # LOW word
+                            high = result.registers[sensor["register"][1] - start_register] & 0xFFFF  # HIGH word
+
+                            # Auto-detect 16-bit vs 32-bit and handle word-order edge cases
+                            # Cases:
+                            #  A) Only LOW has data  -> uint16 (value = low)
+                            #  B) Only HIGH has data -> uint16 (value = high) [typical when lower 16 bits are always 0]
+                            #  C) Both words present -> uint32 (value = (HIGH<<16)|LOW)
+                            #  D) If (C) looks implausible, try swapped fallback.
+
+                            value_16_candidate = None
+                            if low != 0 and high == 0:
+                                value_16_candidate = low
+                            elif high != 0 and low == 0:
+                                value_16_candidate = high
+
+                            if value_16_candidate is not None:
+                                value = value_16_candidate
+                            else:
+                                value = ((high << 16) | low) & 0xFFFFFFFF
+                                swapped = ((low << 16) | high) & 0xFFFFFFFF
+                                if (value & 0xFFFF) == 0 and (swapped & 0xFFFF) != 0 and swapped < value:
+                                    value = swapped
+
                             scaled_value = value * sensor.get("scale", 1)
                             data[sensor["name"]] = round(scaled_value, sensor.get("precision", 0))
                     elif start_register <= sensor["register"] <= end_register:  # int16/uint16
