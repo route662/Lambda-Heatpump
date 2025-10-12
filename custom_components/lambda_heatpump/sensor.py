@@ -53,8 +53,8 @@ SENSORS = [
     {"name": "Heat Pump 1 COP", "register": 1013, "unit": "", "scale": 0.01, "precision": 2, "data_type": "int16", "state_class": "total"},
     {"name": "Heat Pump 1 Request Type", "register": 1015, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total",
      "description_map": ["No Request", "Flow Pump Circulation", "Central Heating", "Central Cooling", "Domestic Hot Water"]},
-    {"name": "Heat Pump 1 Requested Flow Line Temperature", "register": 1016, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
-    {"name": "Heat Pump 1 Requested Return Line Temperature", "register": 1017, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+    # {"name": "Heat Pump 1 Requested Flow Line Temperature", "register": 1016, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+    # {"name": "Heat Pump 1 Requested Return Line Temperature", "register": 1017, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heat Pump 1 Requested Flow to Return Line Temperature Difference", "register": 1018, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heat Pump 1 Relais State 2nd Heating Stage", "register": 1019, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total"},
     {"name": "Heat Pump 1 Compressor Power Consumption Accumulated", "register": [1020, 1021], "unit": "Wh", "scale": 1, "precision": 0, "data_type": "int32", "device_class": "energy", "state_class": "total_increasing"},
@@ -96,7 +96,7 @@ SENSORS = [
     {"name": "Heating Circuit 1 Flow Line Temperature", "register": 5002, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 1 Return Line Temperature", "register": 5003, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 1 Room Device Temperature", "register": 5004, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
-    {"name": "Heating Circuit 1 Set Flow Line Temperature", "register": 5005, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+    # {"name": "Heating Circuit 1 Set Flow Line Temperature", "register": 5005, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 1 Operating Mode", "register": 5006, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total",
      "description_map": ["Off", "Manual", "Automatik", "Auto-Heating", "Auto-Cooling", "Frost", "Summer", "Floor-dry"]},
     {"name": "Heating Circuit 1 Set Flow Line Offset Temperature", "register": 5050, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
@@ -112,7 +112,7 @@ SENSORS = [
     {"name": "Heating Circuit 2 Flow Line Temperature", "register": 5102, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 2 Return Line Temperature", "register": 5103, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 2 Room Device Temperature", "register": 5104, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
-    {"name": "Heating Circuit 2 Set Flow Line Temperature", "register": 5105, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+    # {"name": "Heating Circuit 2 Set Flow Line Temperature", "register": 5105, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 2 Operating Mode", "register": 5106, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total",
      "description_map": ["Off", "Manual", "Automatik", "Auto-Heating", "Auto-Cooling", "Frost", "Summer", "Floor-dry"]},
     {"name": "Heating Circuit 2 Set Flow Line Offset Temperature", "register": 5150, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
@@ -128,7 +128,7 @@ SENSORS = [
     {"name": "Heating Circuit 3 Flow Line Temperature", "register": 5202, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 3 Return Line Temperature", "register": 5203, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 3 Room Device Temperature", "register": 5204, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
-    {"name": "Heating Circuit 3 Set Flow Line Temperature", "register": 5205, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
+    # {"name": "Heating Circuit 3 Set Flow Line Temperature", "register": 5205, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
     {"name": "Heating Circuit 3 Operating Mode", "register": 5206, "unit": "", "scale": 1, "precision": 0, "data_type": "int16", "state_class": "total",
      "description_map": ["Off", "Manual", "Automatik", "Auto-Heating", "Auto-Cooling", "Frost", "Summer", "Floor-dry"]},
     {"name": "Heating Circuit 3 Set Flow Line Offset Temperature", "register": 5250, "unit": "°C", "scale": 0.1, "precision": 1, "data_type": "int16", "device_class": "temperature", "state_class": "measurement"},
@@ -271,21 +271,25 @@ async def async_setup_entry(hass, entry, async_add_entities):
     await coordinator.async_config_entry_first_refresh()
 
     # Gruppierung der Sensoren nach Kategorien
-    grouped_sensors = [
-        (sensor, "General Ambient") for sensor in SENSORS[:5]
-    ] + [
-        (sensor, "E-Manager") for sensor in SENSORS[5:10]
-    ] + [
-        (sensor, "Heat Pump No. 1") for sensor in SENSORS[10:31]
-    ] + [
-        (sensor, "Boiler") for sensor in SENSORS[31:36]
-    ] + [
-        (sensor, "Buffer") for sensor in SENSORS[36:41]
-    ] + [
-        # (sensor, "Solar") for sensor in SENSORS[41:46]  # Solar auskommentiert
-    ] + [
-        (sensor, "Heating Circuit 1") for sensor in SENSORS[41:51]
-    ]
+    
+    # Dynamische Gruppierung nach Registerbereichen, damit auskommentierte Sensoren die Indizes nicht verschieben
+    def _group_for_sensor(sensor_dict):
+        reg = sensor_dict["register"][0] if isinstance(sensor_dict["register"], list) else sensor_dict["register"]
+        name = sensor_dict.get("name", "")
+        if 0 <= reg <= 4: return "General Ambient"
+        if 100 <= reg <= 104: return "E-Manager"
+        if (1000 <= reg <= 1019) or (1020 <= reg <= 1023): return "Heat Pump No. 1"
+        if (2000 <= reg <= 2003) or reg == 2050: return "Boiler"
+        if (3000 <= reg <= 3003) or reg == 3050: return "Buffer"
+        if (5000 <= reg <= 5006) or (5050 <= reg <= 5052): return "Heating Circuit 1"
+        if (5100 <= reg <= 5106) or (5150 <= reg <= 5152): return "Heating Circuit 2"
+        if (5200 <= reg <= 5206) or (5250 <= reg <= 5252): return "Heating Circuit 3"
+        if "Heating Circuit 2" in name: return "Heating Circuit 2"
+        if "Heating Circuit 3" in name: return "Heating Circuit 3"
+        return "Lambda Heatpump"
+
+    grouped_sensors = [(sensor, _group_for_sensor(sensor)) for sensor in SENSORS]
+
 
     # Optionale Heizkreise (basierend auf Konfiguration)
     if entry.data.get("has_heat_circuit_2", True):

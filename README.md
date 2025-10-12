@@ -81,5 +81,15 @@ Wenn dir diese Integration hilft, kannst du mich gerne unterstützen:
 
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Donate-yellow)](https://www.buymeacoffee.com/route662)
 
+## Hinweis zu ausgeblendeten Registern
+Die folgenden Register wurden deaktiviert/ausgeblendet, da sie im normalen Automatik-/Heizkurvenbetrieb keine verwertbaren Werte liefern:
+- 1016, 1017, 5005, 5105, 5205
+Diese Register geben entweder **0** oder **−300.0 °C** (internes Sentinel für „kein fixer Sollwert“) zurück. **Nur im manuellen Betrieb ohne Heizkurve können hier gültige Werte erscheinen**.
+
+## Note about hidden registers
+The following registers have been disabled/hidden because they do not provide valid data during normal automatic (curve-controlled) operation:
+- 1016, 1017, 5005, 5105, 5205
+These registers either return **0** or **−300.0 °C**, which is an internal sentinel meaning “no fixed setpoint.” They only show valid values when the system is running in **manual mode without heating curve**.
+
 ## Lizenz
 Dieses Projekt steht unter der GNU General Public License v3. Siehe die Datei [LICENSE](LICENSE) für weitere Details.
